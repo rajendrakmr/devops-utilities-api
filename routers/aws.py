@@ -1,6 +1,17 @@
 from fastapi import APIRouter,HTTPException
-from services.s3_service import get_s3_buckets
-router = APIRouter()
+from services.aws_service import get_s3_buckets,get_aws_cost
+from fastapi import APIRouter,HTTPException  
+ 
+router = APIRouter(
+    prefix="/aws",
+    tags=["Aws Services"]
+)
+@router.get("/cost")
+def aws_cost():
+    """
+     This API will return unbilled cost aws services.
+    """
+    return get_aws_cost()
 
 @router.get('/s3',status_code=200)
 def get_buckets():
